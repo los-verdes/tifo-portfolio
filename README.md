@@ -5,7 +5,7 @@ FC supporters. Built to be embedded in a Squarespace page via iframe.
 
 ## Stack
 
-- Vite + React + TypeScript
+- Vite 8 + React 18 + TypeScript
 - No runtime dependencies beyond React; styling is plain CSS
 
 ## Develop
@@ -26,6 +26,9 @@ tifo:
    thumbnail at `public/tifos/thumbs/<slug>.webp` (long edge ≤ 700px). Convert
    from a source image with, e.g., `cwebp -q 80 -m 6 source.png -o <slug>.webp`.
 2. Add an entry to the `TIFOS` array with a matching `imageSlug`.
+3. Optionally add an entry to `TIFO_LINKS` (keyed by `imageSlug`) to turn artist
+   names or inline phrases in the description into hyperlinks — no HTML needed in
+   the data.
 
 Images were extracted and optimized from the source `.docx`; originals are kept
 out of the repo (see `.gitignore`).
