@@ -313,7 +313,7 @@ export const TIFOS: readonly Tifo[] = [
 
 /** Distinct years present in the data, newest first, for the filter UI. */
 export const TIFO_YEARS: readonly number[] = Array.from(
-  new Set(TIFOS.map((tifo) => new Date(tifo.isoDate).getUTCFullYear())),
+  new Set(TIFOS.map((tifo) => parseInt(tifo.isoDate.slice(0, 4), 10))),
 ).sort((a, b) => b - a);
 
 /** A span of text within a tifo's artist or description that links out. */
