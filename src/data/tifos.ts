@@ -316,6 +316,143 @@ export const TIFO_YEARS: readonly number[] = Array.from(
   new Set(TIFOS.map((tifo) => new Date(tifo.isoDate).getUTCFullYear())),
 ).sort((a, b) => b - a);
 
+/** Spanish translation of a tifo's title and description. */
+export interface TifoTranslation {
+  readonly title: string;
+  readonly description: string;
+}
+
+/**
+ * Spanish translations keyed by `imageSlug`. Only the title and description are
+ * translated; dates are formatted per-locale at render time, and artist/photo
+ * credits are proper names that stay the same across languages. A slug missing
+ * here simply falls back to the English fields via {@link localizeTifo}.
+ */
+export const TIFO_ES: Readonly<Record<string, TifoTranslation>> = {
+  "legends-of-austin": {
+    title: "Leyendas de Austin",
+    description:
+      "Para el primer partido de la MLS en el estadio Q2, la afición desplegó un tifo inspirado en las leyendas de Austin, destacando el horizonte de la ciudad y el Capitolio del Estado de Texas. En la imagen aparecen la salamandra de Barton Springs, los armadillos de nueve bandas y los murciélagos cola libre mexicanos que habitan en Austin, junto con figuras icónicas de la ciudad como Stevie Ray Vaughan, Matthew McConaughey, Raúl Salinas, Barbara Jordan, Leslie Cochran y Willie Nelson, quienes ocupan un lugar central en el diseño.",
+  },
+  "atx-pride": {
+    title: "Orgullo ATX",
+    description:
+      "Para celebrar el Mes del Orgullo, la afición de Austin levantó hojas de papel de colores que llenaron la Tribuna Sur y formaron una enorme bandera arcoíris, mientras las letras ATX aparecían en los colores de la bandera trans. Porque aquí, “Y’all means all” (todos son bienvenidos). ¡Por Austin, aquí vamos!",
+  },
+  selena: {
+    title: "Selena",
+    description:
+      "Tomando prestada una frase de una de nuestras canciones favoritas de La Murga, la afición de Austin desplegó un tifo en honor a la Reina de la Música Tejana, Selena Quintanilla-Pérez. Además de la tela pintada, su vestuario fue adornado con cientos de brillantes adhesivos que la hacían resplandecer tal como la verdadera Selena. ¡Cinco! ¡Uno! ¡Dos! clap clap clap",
+  },
+  "greetings-from-austin": {
+    title: "Saludos desde Austin",
+    description:
+      "Inspirado en el icónico mural de la calle South 1st, Saludos desde Austin destaca a varios jugadores en momentos clave de nuestra primera temporada. Entre ellos se encuentran Diego Fagúndez celebrando el primer gol en la historia de Austin FC, John Gallagher celebrando el primer gol como local en el Q2 Stadium, así como Brad Stuver, Moussa Djitté, Alex Ring y otros jugadores que dejaron huella durante aquella campaña inaugural.",
+  },
+  "ya-basta-enough": {
+    title: "¡Ya Basta!",
+    description:
+      "Tras el trágico tiroteo en la Escuela Primaria Robb de Uvalde, la afición creó una pancarta que incluía el nombre y la edad de cada una de las víctimas, además de exigir el fin de la violencia armada. Lamentablemente, esta pancarta ha sido compartida con otros clubes de la liga cuyas comunidades también han enfrentado tragedias similares.",
+  },
+  "and-love-is-love": {
+    title: "Y el Amor es Amor es Amor es Amor",
+    description:
+      "Para el Mes del Orgullo 2022, la afición de Austin desplegó una pancarta que proclamaba de manera inequívoca que el Amor es Amor es Amor es Amor, destacando la diversidad de identidades y experiencias que conforman la comunidad de seguidores de Austin FC. Inspirado en las palabras de Lin-Manuel Miranda al recordar a las víctimas del club nocturno Pulse durante su discurso en los Premios Tony del 12 de junio de 2016, este tifo nos recuerda que, sin importar lo que cualquier persona o gobierno diga o haga, “el amor es amor es amor es amor es amor es amor es amor es amor; no puede ser eliminado ni dejado de lado”.",
+  },
+  "verde-hasta-la-muerte": {
+    title: "Verde Hasta La Muerte",
+    description:
+      "Para el primer partido de playoffs en la historia del club, el artista Joel Corral creó un murciélago resucitado acompañado de la frase Verde Hasta La Muerte, destacando el apoyo inquebrantable y eterno de la afición hacia su equipo.",
+  },
+  "playoff-crest": {
+    title: "Escudo de los playoffs",
+    description:
+      "Con menos de una semana entre partidos, los aficionados se apuraron a crear un tifo para nuestro segundo partido de playoffs en casa, frente a un rival estatal. El uso del escudo y las serpentinas como nuestro primer tifo “desplegable” contribuyó a elevar la energía en el estadio, guiando al equipo hacia su segunda victoria en los playoffs y clasificándose para la Final de la Conferencia Oeste de 2022.",
+  },
+  "siempre-verde": {
+    title: "Siempre Verde",
+    description:
+      "Para el partido inaugural de la temporada 2023, la afición apostó en grande con uno de los tifos más grandes que habíamos hecho hasta ese momento. Diseñado por Fabian Rey en su característico estilo artístico, el tifo destacó los bombos de La Murga de Austin, los grandes tambores y platillos que marcan el ritmo de nuestras canciones, cánticos y de todo el estadio (en particular, el bombo del Jugador del Partido, que se utiliza después de cada encuentro como local).",
+  },
+  "verde-on-my-mind": {
+    title: "Verde Siempre en Mi Mente",
+    description:
+      "En su cumpleaños número 90, la afición de Austin rindió homenaje a su propio Red-Headed Stranger, Willie Nelson, con un tifo creado en su honor. El material reflectante utilizado en sus lentes y una nube de humo inspirada en el amor de Willie por lo “verde” demostraron cuánto aprecian los aficionados de Austin FC a esta leyenda y el impacto que ha tenido en la ciudad de Austin.",
+  },
+  "marsha-p-johnson": {
+    title: "Marsha P. Johnson",
+    description:
+      "Para el Mes del Orgullo de 2023, la afición de Austin decidió rendir homenaje a la activista Marsha P. Johnson y a la histórica noche de los Disturbios de Stonewall, cuando ella y un diverso grupo de integrantes de la comunidad LGBTQIA+ se enfrentaron a la violencia policial y la discriminación. La cita destacada de la propia Marsha resalta la importancia de la solidaridad en nuestra lucha continua por alcanzar la igualdad para todas las personas.",
+  },
+  "juntos-somos-familia": {
+    title: "Juntos Somos Familia",
+    description:
+      "Juntos Somos Familia, Juntos Somos Futbol es el mensaje que enmarca nuestro tifo del Mes de la Herencia Hispana. “Con este tifo quise transmitir un mensaje de comunidad e interconexión. Aunque mi estilo artístico es abstracto, hay varios elementos y símbolos fácilmente reconocibles. El corazón en el centro del gran árbol y las figuras tomadas de la mano son algunos de ellos. Todos representan crecimiento, unidad y conexión con nuestras raíces. Para mí, esas son raíces hispanas, y este tifo me permitió celebrar mi herencia mexicana. Como un árbol, esta comunidad se mantiene fuerte y florece por nuestro equipo, nuestra familia y Austin. Juntos somos familia, juntos somos fútbol.” — Marcos Morales",
+  },
+  "heartbeat-of-austin": {
+    title: "El Latido de Austin",
+    description:
+      "El Latido de Austin representado en este tifo celebra uno de nuestros rituales previos al partido. Austinites de toda la comunidad se unen en la Tribuna Sur para tocar el bombo mientras la afición participa en el tradicional llamado y respuesta de ¡Listos! ¡Verde!, generando la energía que impulsa al estadio. Este hermoso tifo en forma de corazón, rodeado por la frase de La Murga “Verde Es Un Sentimiento”, marcó el inicio de nuestra temporada 2024.",
+  },
+  campeones: {
+    title: "Campeones",
+    description:
+      "Tras la victoria en la MLS Next Pro Cup de 2023, los aficionados de Austin celebraron al segundo equipo con un tifo que mostraba el escudo adornado con una nueva estrella.",
+  },
+  "thats-my-copa": {
+    title: "¡Esa es mi Copa, no te conozco!",
+    description:
+      "Para celebrar la querida serie animada “King of the Hill”, ambientada en Texas y, de paso, trolear a nuestros rivales del norte de Texas, los aficionados crearon un tifo de Bobby Hill para este partido de la Copa Tejas. Representando una escena muy conocida de la serie, el texto “¡Esa es mi Copa, no te conozco!” hace referencia a la defensa, por parte del Austin FC, de sus títulos de la Copa Tejas de 2022 y 2023. La forma y el borde del diseño se eligieron específicamente como un guiño a la creciente cultura de los parches en Austin.",
+  },
+  "protect-the-legend": {
+    title: "Protege la leyenda",
+    description:
+      "Para celebrar el Mes de la Herencia de los Asiáticos Americanos e Isleños del Pacífico, los aficionados jugaron con el lema del club “Cultiva La Leyenda” utilizando una imagen clásica de esta comunidad: el dragón. Considerado un protector en las leyendas de los asiáticos americanos e isleños del Pacífico, el dragón aparece en las nubes sosteniendo un balón de fútbol.",
+  },
+  "dont-mess-with-trans-texans": {
+    title: "No te metas con los texanos trans",
+    description:
+      "Todo buen texano sabe que no debes meterte con Texas. Sin embargo, para el Mes del Orgullo de 2024, la afición de Austin FC alzó la voz frente al creciente número de iniciativas legislativas anti-trans impulsadas a nivel estatal y federal. Utilizando los colores de la bandera trans en lugar de la bandera del estado de Texas, mostramos nuestro apoyo a nuestros hermanos y hermanas trans y les recordamos que en la Tribuna Sur, Y’all means All — aquí todas las personas son bienvenidas.",
+  },
+  "always-here-year-after-year": {
+    title: "Siempre Aquí, Año Tras Año",
+    description:
+      "Este tifo combina imágenes icónicas de Austin, como el Puente de Congress Avenue y los atardeceres característicos de la Violet Crown. La obra celebra cómo, al igual que los murciélagos cola libre mexicanos regresan a su hogar cada año, la afición de Austin FC vuelve temporada tras temporada para celebrar a nuestra comunidad y apoyar a nuestra ciudad y a nuestro equipo. Además del extraordinario trabajo de Joel, los artistas locales de grafiti, Nando y Drib, colaboraron para crear un arte realista en los pilares del puente. Puedes encontrar más información en nuestra publicación del blog.",
+  },
+  "legends-never-die": {
+    title: "Las Leyendas Nunca Mueren",
+    description:
+      "Diecisiete retratos individuales de jugadores de Austin FC se combinaron en una sola imagen de tifo, unidos por ramas y hojas de árboles sobre una pancarta con la frase Las Leyendas Nunca Mueren, destacando la importancia de cada integrante de nuestro equipo. Los retratos fueron creados por más de una docena de artistas, cada uno aportando su propio estilo y visión al proyecto. En la esquina inferior izquierda se incluyó una hoja en homenaje a Marcos Anaya Jr., un joven aficionado de Austin FC que falleció trágicamente poco antes de que se desplegara el tifo.",
+  },
+  "abolish-ice": {
+    title: "Abolir ICE",
+    description:
+      "Tras una escalada en las acciones y la violencia asociadas con las operaciones de ICE en distintas partes de Estados Unidos, la afición de Austin se unió para pintar y exhibir una pancarta que pedía la abolición de la agencia. Debido a las regulaciones de la MLS y de la directiva del club, la pancarta no fue autorizada para mostrarse dentro del estadio. Aun así, los aficionados lograron ingresarla y desplegarla por su cuenta.",
+  },
+  "we-will-ride-with-you-forever": {
+    title: "Siempre Cabalgaremos Contigo",
+    description:
+      "Para el partido inaugural de la temporada 2026, la afición desplegó una imagen de un grupo de vaqueros afroamericanos acompañada de la frase Siempre Cabalgaremos Contigo. El diseño, creado en colaboración por Chris Tobar, Marcos Morales y Rico Hernández, rinde homenaje a la rica historia de los vaqueros afroamericanos en Texas, una herencia preservada y celebrada en el Black Cowboy Museum fundado por Larry Callies. Además de reflejar la pasión de nuestra afición por el equipo, el proyecto también sirvió como una recaudación de fondos para el Black Cowboy Museum, generando más de $2,000 dólares en donaciones y ventas de mercancía para apoyar su expansión y continuar su importante labor. Para más información, consulta nuestra publicación en el blog.",
+  },
+};
+
+/**
+ * Returns the title and description for a tifo in the requested language,
+ * falling back to the English fields when a Spanish translation is missing.
+ */
+export function localizeTifo(
+  tifo: Tifo,
+  language: "en" | "es",
+): { readonly title: string; readonly description: string } {
+  if (language === "es") {
+    const translation = TIFO_ES[tifo.imageSlug];
+    if (translation) {
+      return translation;
+    }
+  }
+  return { title: tifo.title, description: tifo.description };
+}
+
 /** A span of text within a tifo's artist or description that links out. */
 export interface InlineLink {
   /** Exact substring to turn into a link (artist name or inline phrase). */

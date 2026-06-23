@@ -52,6 +52,7 @@ body {
 /* ---- Hero / intro ---- */
 
 .hero {
+  position: relative;
   /* Solid "darkAccent" green — the dark box used across losverdesatx.org. */
   background: var(--verde-dark);
   color: #fff;
@@ -59,6 +60,61 @@ body {
   padding: 48px 40px;
   margin: var(--gutter) 0 36px;
   box-shadow: var(--shadow);
+}
+
+/* ---- Language toggle ---- */
+
+.lang-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  padding: 7px 16px;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.lang-toggle::before {
+  content: "🌐";
+  font-size: 0.9em;
+  line-height: 1;
+}
+
+.lang-toggle:hover,
+.lang-toggle:focus-visible {
+  background: rgba(255, 255, 255, 0.24);
+  border-color: #fff;
+  outline: none;
+}
+
+/* Variant shown inside the lightbox panel, which sits on a light background. */
+.lang-toggle--modal {
+  position: absolute;
+  top: 22px;
+  right: 24px;
+  background: var(--light-accent);
+  color: var(--verde-deep);
+  border-color: var(--verde);
+  padding: 5px 13px;
+  font-size: 0.8rem;
+  z-index: 1;
+}
+
+.lang-toggle--modal:hover,
+.lang-toggle--modal:focus-visible {
+  background: var(--verde);
+  border-color: var(--verde);
+  color: #fff;
 }
 
 .hero__eyebrow {
@@ -265,8 +321,16 @@ body {
 }
 
 .modal__panel {
+  position: relative;
   padding: 28px 28px 32px;
   overflow-y: auto;
+}
+
+/* Reserve space at the top-right so the in-panel toggle never overlaps the
+   year/title, even at the narrowest panel width. */
+.modal__year,
+.modal__title {
+  padding-right: 96px;
 }
 
 .modal__year {

@@ -1,13 +1,18 @@
 import { useEffect } from "react";
-import { TIFO_LINKS, type Tifo } from "../data/tifos.ts";
+import { TIFO_LINKS, localizeTifo, type Tifo } from "../data/tifos.ts";
+import { formatDisplayDate, UI_STRINGS, type Language } from "../i18n.ts";
 import { linkify } from "./linkify.tsx";
 
 interface LightboxProps {
   /** The tifo currently shown, or null when the lightbox is closed. */
   readonly tifo: Tifo | null;
+  /** Active UI language. */
+  readonly language: Language;
   readonly onClose: () => void;
   readonly onPrev: () => void;
   readonly onNext: () => void;
+  /** Toggles between the supported languages without closing the lightbox. */
+  readonly onToggleLanguage: () => void;
 }
 
 /**
@@ -15,7 +20,14 @@ interface LightboxProps {
  * its full write-up. Supports keyboard navigation (Esc to close, arrows to
  * page between tifos) and locks background scroll while open.
  */
-export function Lightbox({ tifo, onClose, onPrev, onNext }: LightboxProps) {
+export function Lightbox({
+  tifo,
+  language,
+  onClose,
+  onPrev,
+  onNext,
+  onToggleLanguage,
+}: LightboxProps) {
   useEffect(() => {
     if (!tifo) {
       return;
@@ -45,6 +57,9 @@ export function Lightbox({ tifo, onClose, onPrev, onNext }: LightboxProps) {
     return null;
   }
 
+  const strings = UI_STRINGS[language];
+  const { title, description } = localizeTifo(tifo, language);
+  const displayDate = formatDisplayDate(tifo.isoDate, language);
   const year = tifo.isoDate.slice(0, 4);
   const inlineLinks = TIFO_LINKS[tifo.imageSlug] ?? [];
 
@@ -53,15 +68,19 @@ export function Lightbox({ tifo, onClose, onPrev, onNext }: LightboxProps) {
       className="modal-overlay"
       role="dialog"
       aria-modal="true"
-      aria-label={`${tifo.title} tifo details`}
+      aria-label={`${title} tifo details`}
       onClick={onClose}
     >
-      <button className="modal__close" aria-label="Close" onClick={onClose}>
+      <button
+        className="modal__close"
+        aria-label={strings.modalClose}
+        onClick={onClose}
+      >
         ×
       </button>
       <button
         className="modal__nav modal__nav--prev"
-        aria-label="Previous tifo"
+        aria-label={strings.modalPrev}
         onClick={(event) => {
           event.stopPropagation();
           onPrev();
@@ -71,7 +90,7 @@ export function Lightbox({ tifo, onClose, onPrev, onNext }: LightboxProps) {
       </button>
       <button
         className="modal__nav modal__nav--next"
-        aria-label="Next tifo"
+        aria-label={strings.modalNext}
         onClick={(event) => {
           event.stopPropagation();
           onNext();
@@ -85,30 +104,37 @@ export function Lightbox({ tifo, onClose, onPrev, onNext }: LightboxProps) {
           <img
             className="modal__img"
             src={`${import.meta.env.BASE_URL}tifos/${tifo.imageSlug}.webp`}
-            alt={`${tifo.title} tifo, raised ${tifo.displayDate}`}
+            alt={`${title} tifo, raised ${displayDate}`}
           />
         </div>
         <div className="modal__panel">
+          <button
+            className="lang-toggle lang-toggle--modal"
+            onClick={onToggleLanguage}
+            aria-label={strings.languageToggleAria}
+          >
+            {strings.languageToggleLabel}
+          </button>
           <p className="modal__year">{year}</p>
-          <h2 className="modal__title">{tifo.title}</h2>
+          <h2 className="modal__title">{title}</h2>
           <ul className="modal__facts">
             <li>
-              <span className="k">Date</span>
-              {tifo.displayDate}
+              <span className="k">{strings.modalDateKey}</span>
+              {displayDate}
             </li>
             <li>
-              <span className="k">Opponent</span>
+              <span className="k">{strings.modalOpponentKey}</span>
               {tifo.opponent}
             </li>
             <li>
-              <span className="k">Artist</span>
+              <span className="k">{strings.modalArtistKey}</span>
               {linkify(tifo.artist, inlineLinks)}
             </li>
           </ul>
-          <p className="modal__desc">
-            {linkify(tifo.description, inlineLinks)}
+          <p className="modal__desc">{linkify(description, inlineLinks)}</p>
+          <p className="modal__credit">
+            {strings.photoBy} {tifo.photoCredit}
           </p>
-          <p className="modal__credit">Photo by {tifo.photoCredit}</p>
           <div className="modal__links">
             {tifo.sourceUrl ? (
               <a
@@ -117,7 +143,7 @@ export function Lightbox({ tifo, onClose, onPrev, onNext }: LightboxProps) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                View original photo →
+                {strings.viewOriginalPhoto}
               </a>
             ) : null}
             {tifo.blogUrl ? (
@@ -127,7 +153,7 @@ export function Lightbox({ tifo, onClose, onPrev, onNext }: LightboxProps) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Read the blog post →
+                {strings.readBlogPost}
               </a>
             ) : null}
           </div>
