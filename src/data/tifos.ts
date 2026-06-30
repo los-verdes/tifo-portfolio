@@ -56,7 +56,7 @@ export const TIFOS: readonly Tifo[] = [
       "To celebrate Pride, Austin supporters raised colored paper sheets, filling the South end and creating a large rainbow flag, spelling out ATX in the trans flag colors. Y’all means all, for Austin here we go!",
     photoCredit: "Gina Rivera",
     sourceUrl:
-      "https://losverdesatx.slack.com/archives/C013YCYJNE5/p1779061488116459?thread_ts=1779061257.134039&cid=C013YCYJNE5",
+      "https://drive.google.com/file/d/1Kzfj4pudbytQhZy2Ew5WjrvBgYw_5W3H/view?usp=drive_link",
   },
   {
     imageSlug: "selena",
@@ -69,7 +69,7 @@ export const TIFOS: readonly Tifo[] = [
       "Stealing lyrics from one of our favorite La Murga songs, Austin supporters raised a tifo highlighting the Queen of Tejano music, Selena Quintanilla-Pérez. In addition to the painted fabric, her outfit glittered with hundreds of stick-on rhinestones making her sparkle just like the real Selena. ¡Cinco! ¡Uno! ¡Dos! clap clap clap",
     photoCredit: "Duc Minh Tran",
     sourceUrl:
-      "https://losverdesatx.slack.com/archives/C013CBC5JFL/p1779291518002079?thread_ts=1779286773.354859&cid=C013CBC5JFL",
+      "https://drive.google.com/file/d/1Oli36ngUSzHTWpeNmCyqtsV2iZOIcuL3/view?usp=drive_link",
   },
   {
     imageSlug: "greetings-from-austin",
@@ -108,7 +108,7 @@ export const TIFOS: readonly Tifo[] = [
       "For Pride 2022, Austin supporters unfurled a banner unequivocally stating that And Love is Love is Love is Love, highlighting the many shades that make up Austin FC supporters. Inspired by the words of Lin Manuel Miranda remembering the victims of Pulse Nightclub in his speech at the Tony Awards on June 12th, 2016, this tifo reminds us that no matter what any individual or government says or does “And love is love is love is love is love is love is love is love; cannot be killed or swept aside”.",
     photoCredit: "Tela Mange",
     sourceUrl:
-      "https://losverdesatx.slack.com/archives/C013YCYJNE5/p1779068489356399?thread_ts=1779061389.012509&cid=C013YCYJNE5",
+      "https://drive.google.com/file/d/1BwCp1uHJxfPbY8WbnyHKs2ZBQ64wHryX/view?usp=drive_link",
   },
   {
     imageSlug: "verde-hasta-la-muerte",
@@ -134,7 +134,7 @@ export const TIFOS: readonly Tifo[] = [
       "With less than a week between games, supporters rushed to create a tifo for our second home playoff game against an in-state rival that sucks. Using the crest and streamers as our first “roll-over” tifo helped drive the energy in the stadium, leading the team to their second playoff win and moving us onto the 2023 Western Conference Final.",
     photoCredit: "Aries Silva",
     sourceUrl:
-      "https://losverdesatx.slack.com/archives/C013YCYJNE5/p1779064494631589?thread_ts=1779061339.155109&cid=C013YCYJNE5",
+      "https://drive.google.com/file/d/1vlS0jA9JIJqFpK7UW9x4DklgHW-krBPY/view?usp=drive_link",
   },
   {
     imageSlug: "siempre-verde",
@@ -199,7 +199,7 @@ export const TIFOS: readonly Tifo[] = [
       "The Heartbeat of Austin highlighted in this tifo represents and celebrates one of our pre-game rituals. Local Austinites join the South End and beat the bombo drum while supporters perform a call and response of ¡Listos!/¡Verde! to build the energy in the stadium. This beautiful corazón tifo, ringed with La Murga lyrics “Verde Es En Sentimiento” kicked off our 2024 season.",
     photoCredit: "Gina Rivera",
     sourceUrl:
-      "https://losverdesatx.slack.com/archives/C013YCYJNE5/p1779062082935669?thread_ts=1779061348.673019&cid=C013YCYJNE5",
+      "https://drive.google.com/file/d/10JT0rBGFMjZG54Qeula3MWIiD6zxgRiG/view?usp=drive_link",
   },
   {
     imageSlug: "campeones",
@@ -212,7 +212,7 @@ export const TIFOS: readonly Tifo[] = [
       "Following their 2023 MLS Next Pro Cup win, Austin fans celebrated the second team with a rollover tifo showing the crest adorned with a brand new star.",
     photoCredit: "David Serrins",
     sourceUrl:
-      "https://losverdesatx.slack.com/archives/C013YCYJNE5/p1779064971590259?thread_ts=1779061380.997099&cid=C013YCYJNE5",
+      "https://drive.google.com/file/d/1mgDQIe2rnm5smAIyTOlh1mGqFV3Z973a/view?usp=drive_link",
   },
   {
     imageSlug: "thats-my-copa",
@@ -292,7 +292,7 @@ export const TIFOS: readonly Tifo[] = [
       "Following an escalation of violence in ICE activity throughout the US, Austin supporters unified to paint and display a banner calling for the abolishment of the group. Due to MLS and front office regulations, the banner was not allowed in the stadium, so supporters snuck it in and displayed it without support.",
     photoCredit: "Ari Gernaat",
     sourceUrl:
-      "https://losverdesatx.slack.com/archives/C013CBC5JFL/p1779300569108699?thread_ts=1779286773.354859&cid=C013CBC5JFL",
+      "https://drive.google.com/file/d/1VdXynoRMiRu93WKZ9_0urIIECDnhLMSg/view?usp=drive_link",
   },
   {
     imageSlug: "we-will-ride-with-you-forever",
