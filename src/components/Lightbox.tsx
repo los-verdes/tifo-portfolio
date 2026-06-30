@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, type CSSProperties } from "react";
+import type { EmbedViewport } from "../App.tsx";
 import { TIFO_LINKS, localizeTifo, type Tifo } from "../data/tifos.ts";
 import { formatDisplayDate, UI_STRINGS, type Language } from "../i18n.ts";
 import { linkify } from "./linkify.tsx";
@@ -8,6 +9,12 @@ interface LightboxProps {
   readonly tifo: Tifo | null;
   /** Active UI language. */
   readonly language: Language;
+  /**
+   * Visible slice of the embedding iframe, or null when standalone / not
+   * embedded. When provided, the overlay is pinned to this slice so it stays
+   * centered in the visitor's view inside a tall auto-resized iframe.
+   */
+  readonly viewport: EmbedViewport | null;
   readonly onClose: () => void;
   readonly onPrev: () => void;
   readonly onNext: () => void;
@@ -23,6 +30,7 @@ interface LightboxProps {
 export function Lightbox({
   tifo,
   language,
+  viewport,
   onClose,
   onPrev,
   onNext,
@@ -63,9 +71,17 @@ export function Lightbox({
   const year = tifo.isoDate.slice(0, 4);
   const inlineLinks = TIFO_LINKS[tifo.imageSlug] ?? [];
 
+  // When embedded, pin the overlay to the visible slice of the iframe instead
+  // of using the default fixed full-viewport positioning (which, in a tall
+  // auto-resized iframe, would place the modal far off-screen).
+  const overlayStyle: CSSProperties | undefined = viewport
+    ? { position: "absolute", top: viewport.top, height: viewport.height }
+    : undefined;
+
   return (
     <div
-      className="modal-overlay"
+      className={`modal-overlay ${viewport ? "modal-overlay--embedded" : ""}`}
+      style={overlayStyle}
       role="dialog"
       aria-modal="true"
       aria-label={`${title} tifo details`}

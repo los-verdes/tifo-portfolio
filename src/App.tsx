@@ -16,6 +16,18 @@ const ALL_YEARS = "all" as const;
 type YearFilter = number | typeof ALL_YEARS;
 
 /**
+ * The slice of the (auto-resized) iframe that is currently visible in the
+ * parent page, in the iframe's own content coordinates. The parent posts this
+ * so the lightbox can center itself in view; see {@link useParentViewport}.
+ */
+export interface EmbedViewport {
+  /** Distance, in px, from the iframe's top to the top of the visible slice. */
+  readonly top: number;
+  /** Height, in px, of the visible slice. */
+  readonly height: number;
+}
+
+/**
  * Posts the document height to the parent window so a Squarespace iframe can
  * resize itself to fit the content (no inner scrollbar). The parent page must
  * include the matching listener snippet from EMBED.md.
@@ -42,6 +54,56 @@ function useIframeAutoResize(): void {
   }, []);
 }
 
+/**
+ * Tracks which slice of the iframe is visible in the parent page.
+ *
+ * When auto-resizing, the iframe is as tall as its content, so a `position:
+ * fixed` modal would center in the middle of that tall frame — far off-screen.
+ * The parent listens for our `request-viewport` message and replies with a
+ * `tifo-portfolio:viewport` message describing the visible slice (in the
+ * iframe's own coordinates). We ask for it whenever `enabled` flips true (i.e.
+ * the lightbox opens) and keep it fresh while open.
+ *
+ * Returns `null` when no parent answers — e.g. the standalone site, an older
+ * embed snippet, or when not embedded — so callers can fall back to normal
+ * fixed-viewport centering.
+ */
+function useParentViewport(enabled: boolean): EmbedViewport | null {
+  const [viewport, setViewport] = useState<EmbedViewport | null>(null);
+
+  useEffect(() => {
+    if (!enabled) {
+      setViewport(null);
+      return;
+    }
+
+    const handleMessage = (event: MessageEvent): void => {
+      const data = event.data;
+      if (
+        data &&
+        data.type === "tifo-portfolio:viewport" &&
+        typeof data.top === "number" &&
+        typeof data.height === "number"
+      ) {
+        setViewport({ top: data.top, height: data.height });
+      }
+    };
+
+    const requestViewport = (): void => {
+      window.parent.postMessage({ type: "tifo-portfolio:request-viewport" }, "*");
+    };
+
+    window.addEventListener("message", handleMessage);
+    requestViewport();
+
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, [enabled]);
+
+  return viewport;
+}
+
 export function App() {
   const [activeYear, setActiveYear] = useState<YearFilter>(ALL_YEARS);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -50,6 +112,7 @@ export function App() {
   const strings = UI_STRINGS[language];
 
   useIframeAutoResize();
+  const parentViewport = useParentViewport(activeIndex !== null);
 
   // Keep the document language in sync for assistive tech and `lang`-scoped CSS,
   // and persist the choice so repeat visitors keep their preferred language.
@@ -179,6 +242,7 @@ export function App() {
       <Lightbox
         tifo={activeTifo}
         language={language}
+        viewport={parentViewport}
         onClose={() => setActiveIndex(null)}
         onPrev={showPrev}
         onNext={showNext}

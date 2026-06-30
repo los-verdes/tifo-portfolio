@@ -304,6 +304,23 @@ body {
   max-height: calc(100vh - 40px);
 }
 
+/* Embedded mode: the overlay is pinned (via inline styles) to the iframe's
+   visible slice rather than the full frame, so its descendants must position
+   against the overlay (absolute) instead of the tall iframe viewport (fixed),
+   and heights must be measured against the slice, not 100vh. */
+.modal-overlay--embedded .modal {
+  max-height: calc(100% - 40px);
+}
+
+.modal-overlay--embedded .modal__img {
+  max-height: calc(100% - 40px);
+}
+
+.modal-overlay--embedded .modal__close,
+.modal-overlay--embedded .modal__nav {
+  position: absolute;
+}
+
 .modal__imgwrap {
   background: #0a160d;
   display: flex;
