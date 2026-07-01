@@ -609,43 +609,17 @@ body {
   }
 }
 
-/* ---- Tablet / iPad (two-column modal, but roomier than a phone) ---- */
+/* ---- Tablet / iPad ---- */
 /* Upper bound covers common iPad landscape widths (iPad 10.2" ≈ 1080px,
-   iPad Pro 11" ≈ 1194px); wider is treated as desktop. */
+   iPad Pro 11" ≈ 1194px); wider is treated as desktop. iPad keeps the desktop
+   side-by-side layout (image left, text right); only the styling of the
+   controls and the touch-scroll of the text panel are tuned here. */
 @media (min-width: 761px) and (max-width: 1194px) {
-  /* Touch scroll fix: on iPad the two-column modal only scrolled its narrow
-     text panel — swiping the large image column (~57% of the modal) did
-     nothing, so touch users thought the modal was frozen. Stack to a single
-     column and make the MODAL ITSELF the scroll region, so a swipe anywhere
-     (image or text) scrolls. Image sits on top and scrolls away as you read. */
-  .modal,
-  .modal-overlay--embedded .modal {
-    display: block;
-    max-width: 640px;
-    max-height: calc(100% - 48px);
-    overflow-y: auto;
+  /* Smooth, contained touch scrolling in the text panel (the image is fully
+     contained, so the panel is the only thing that needs to scroll). */
+  .modal__panel {
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
-  }
-
-  .modal__panel {
-    overflow: visible;
-  }
-
-  .modal__imgwrap {
-    /* Fill the card width at natural aspect ratio; no letterbox band. */
-    display: block;
-    aspect-ratio: auto;
-    min-height: 0;
-    background: transparent;
-  }
-
-  .modal__img,
-  .modal-overlay--embedded .modal__img {
-    width: 100%;
-    height: auto;
-    max-height: none;
-    object-fit: contain;
   }
 
   /* Match the phone's controls: dark translucent circles with a light border,
