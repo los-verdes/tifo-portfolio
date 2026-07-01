@@ -512,23 +512,21 @@ body {
   }
 
   .modal__imgwrap {
+    /* Shrink-wrap the image: no fixed aspect box, no flex centering, so there
+       are no dark letterbox bands around the photo. */
+    display: block;
     min-height: 0;
-    /* Let the image drive the height so there is no dark letterboxing around a
-       small photo; fills the full card width. */
     aspect-ratio: auto;
   }
 
   .modal__img {
+    /* Fill the card width at the photo's natural aspect ratio. No max-height /
+       object-fit cap — those were letterboxing the image smaller than the box.
+       The modal is bounded and the text panel scrolls, so a tall image is fine. */
     width: 100%;
     height: auto;
-    max-height: 55vh;
+    max-height: none;
     object-fit: contain;
-  }
-
-  /* Embedded: `vh` refers to the tall iframe, not the phone screen, so cap the
-     image to a share of the visible slice instead, leaving room for the panel. */
-  .modal-overlay--embedded .modal__img {
-    max-height: 50%;
   }
 
   /* The panel is the scroll region; contain overscroll so a swipe past the
