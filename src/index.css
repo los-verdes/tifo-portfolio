@@ -582,17 +582,18 @@ body {
     /* Vertically centered in the visible slice; stays put as content scrolls. */
     top: 50%;
     transform: translateY(-50%);
-    width: 42px;
-    height: 42px;
-    font-size: 1.4rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
   }
 
+  /* Hug the screen edges so the arrows overlap as little text as possible. */
   .modal__nav--prev {
-    left: 12px;
+    left: 2px;
   }
 
   .modal__nav--next {
-    right: 12px;
+    right: 2px;
   }
 
   .hero {
