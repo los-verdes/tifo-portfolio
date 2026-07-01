@@ -112,7 +112,27 @@ export function App() {
   const strings = UI_STRINGS[language];
 
   useIframeAutoResize();
-  const parentViewport = useParentViewport(activeIndex !== null);
+  const modalOpen = activeIndex !== null;
+  const parentViewport = useParentViewport(modalOpen);
+
+  // Ask the parent page to lock its scroll while the lightbox is open, so the
+  // host page behind the (cross-origin) iframe can't scroll underneath it. The
+  // parent restores scrolling on unlock; older embed snippets simply ignore
+  // these messages. See EMBED.md.
+  useEffect(() => {
+    const type = modalOpen
+      ? "tifo-portfolio:lock-scroll"
+      : "tifo-portfolio:unlock-scroll";
+    window.parent.postMessage({ type }, "*");
+    return () => {
+      if (modalOpen) {
+        window.parent.postMessage(
+          { type: "tifo-portfolio:unlock-scroll" },
+          "*",
+        );
+      }
+    };
+  }, [modalOpen]);
 
   // Keep the document language in sync for assistive tech and `lang`-scoped CSS,
   // and persist the choice so repeat visitors keep their preferred language.

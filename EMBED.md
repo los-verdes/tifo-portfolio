@@ -67,6 +67,27 @@ handles both messages:
       );
     }
 
+    // Lock/unlock host-page scrolling while the lightbox is open, so the page
+    // behind the iframe can't scroll underneath the popup. We pin <body> at the
+    // current scroll offset and restore it on unlock.
+    var savedScrollY = 0;
+    function lockScroll() {
+      savedScrollY = window.scrollY || window.pageYOffset || 0;
+      document.body.style.position = "fixed";
+      document.body.style.top = -savedScrollY + "px";
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.width = "100%";
+    }
+    function unlockScroll() {
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.width = "";
+      window.scrollTo(0, savedScrollY);
+    }
+
     window.addEventListener("message", function (event) {
       var data = event.data;
       if (!data) return;
@@ -74,6 +95,10 @@ handles both messages:
         frame.style.height = data.height + "px";
       } else if (data.type === "tifo-portfolio:request-viewport") {
         sendViewport();
+      } else if (data.type === "tifo-portfolio:lock-scroll") {
+        lockScroll();
+      } else if (data.type === "tifo-portfolio:unlock-scroll") {
+        unlockScroll();
       }
     });
 
