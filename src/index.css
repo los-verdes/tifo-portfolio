@@ -556,10 +556,12 @@ body {
   }
 
   /* The whole modal scrolls now, so the panel itself must not be its own scroll
-     container (that would trap the text and keep the image fixed above it). */
+     container (that would trap the text and keep the image fixed above it).
+     Tighter side padding than desktop to make better use of the narrow width. */
   .modal__panel {
     min-height: 0;
     overflow: visible;
+    padding: 20px 18px 28px;
   }
 
   /* Controls are pinned to the overlay (the stable viewport slice), so they
