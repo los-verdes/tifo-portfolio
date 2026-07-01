@@ -286,10 +286,17 @@ body {
   background: rgba(5, 23, 12, 0.88);
   display: flex;
   align-items: center;
+  /* When the modal is taller than the overlay (e.g. iPad landscape, or a short
+     embedded slice), `safe center` aligns it to the top instead of clipping the
+     title out of reach; the overlay then scrolls to reveal the rest. */
+  align-items: safe center;
   justify-content: center;
   z-index: 1000;
   padding: 20px;
   overflow-y: auto;
+  /* Keep touch/scroll momentum inside the overlay; never chain to the page or
+     (when embedded) the host site behind the iframe. */
+  overscroll-behavior: contain;
 }
 
 .modal {
@@ -496,13 +503,34 @@ body {
 /* ---- Responsive ---- */
 
 @media (max-width: 760px) {
+  /* Single column: image on top, scrollable text panel below. Keep the modal
+     bounded to the overlay so the panel — not the background — scrolls. */
   .modal {
     grid-template-columns: 1fr;
-    max-height: none;
+    grid-template-rows: auto 1fr;
+    max-height: calc(100% - 40px);
+  }
+
+  .modal__imgwrap {
+    min-height: 0;
   }
 
   .modal__img {
-    max-height: 60vh;
+    max-height: 45vh;
+  }
+
+  /* Embedded: `vh` refers to the tall iframe, not the phone screen, so cap the
+     image to a share of the visible slice instead, leaving room for the panel. */
+  .modal-overlay--embedded .modal__img {
+    max-height: 45%;
+  }
+
+  /* The panel is the scroll region; contain overscroll so a swipe past the
+     end doesn't scroll the gallery/host page behind the lightbox. */
+  .modal__panel {
+    min-height: 0;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
   }
 
   .modal__nav {
