@@ -512,18 +512,21 @@ body {
     align-items: stretch;
   }
 
-  /* Single column: image on top, scrollable text panel below. Fill the entire
-     overlay slice (no 40px reservation) so there is no dark bar at the bottom;
-     the panel — not the background — scrolls. The embedded selector is repeated
-     to match the base embedded rule's specificity (0-2-0) and win here. */
+  /* Single column, and the MODAL ITSELF is the scroll region: the image and the
+     text scroll together as one document. A tall photo sits at the top at full
+     size and simply scrolls away as you read — it never crowds the text yet is
+     always viewable. Fill the whole overlay slice (no dark bar). The embedded
+     selector is repeated to match its base specificity (0-2-0) and win here. */
   .modal,
   .modal-overlay--embedded .modal {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
+    display: block;
     height: 100%;
     max-height: 100%;
     margin: 0;
     border-radius: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
   }
 
   .modal__imgwrap {
@@ -545,30 +548,29 @@ body {
   .modal-overlay--embedded .modal__img {
     /* Fill the card width at the photo's natural aspect ratio. No max-height /
        object-fit cap — those were letterboxing the image smaller than the box.
-       The modal is bounded and the text panel scrolls, so a tall image is fine. */
+       The modal scrolls as one document, so a tall image is fine. */
     width: 100%;
     height: auto;
     max-height: none;
     object-fit: contain;
   }
 
-  /* The panel is the scroll region; contain overscroll so a swipe past the
-     end doesn't scroll the gallery/host page behind the lightbox. */
+  /* The whole modal scrolls now, so the panel itself must not be its own scroll
+     container (that would trap the text and keep the image fixed above it). */
   .modal__panel {
     min-height: 0;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
+    overflow: visible;
   }
 
-  /* On mobile the white text panel fills the width, so the translucent-white
-     controls vanish against it. Make them solid and dark for contrast, and pin
-     them within the image (dark) region at the top of the card. */
+  /* Controls are pinned to the overlay (the stable viewport slice), so they
+     stay put while the modal scrolls beneath. Make them solid/dark for contrast
+     and give them a shadow so they read over either the image or white text. */
   .modal__close,
   .modal__nav {
     position: absolute;
-    background: rgba(5, 23, 12, 0.7);
-    border: 1.5px solid rgba(255, 255, 255, 0.65);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    background: rgba(5, 23, 12, 0.72);
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   }
 
   .modal__close {
@@ -577,8 +579,9 @@ body {
   }
 
   .modal__nav {
-    /* Sit over the image band (top ~45% of the card), not the white text. */
-    top: 22%;
+    /* Vertically centered in the visible slice; stays put as content scrolls. */
+    top: 50%;
+    transform: translateY(-50%);
     width: 42px;
     height: 42px;
     font-size: 1.4rem;

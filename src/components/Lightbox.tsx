@@ -37,14 +37,17 @@ export function Lightbox({
   onToggleLanguage,
 }: LightboxProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
-  // On open and whenever the shown tifo changes (next/prev), reset both scroll
-  // regions to the top so each tifo starts at its title rather than wherever
-  // the previous one was scrolled. The overlay scrolls on desktop; the panel
-  // scrolls on mobile.
+  // On open and whenever the shown tifo changes (next/prev), reset every scroll
+  // region to the top so each tifo starts at its image/title rather than where
+  // the previous one was scrolled. Which element actually scrolls varies by
+  // layout: the overlay (desktop), the modal (mobile — image + text scroll as
+  // one), or the panel (older/other cases). Resetting all is harmless.
   useEffect(() => {
     overlayRef.current?.scrollTo({ top: 0 });
+    modalRef.current?.scrollTo({ top: 0 });
     panelRef.current?.scrollTo({ top: 0 });
   }, [tifo?.imageSlug]);
 
@@ -128,7 +131,11 @@ export function Lightbox({
         ›
       </button>
 
-      <div className="modal" onClick={(event) => event.stopPropagation()}>
+      <div
+        className="modal"
+        ref={modalRef}
+        onClick={(event) => event.stopPropagation()}
+      >
         <div className="modal__imgwrap">
           <img
             className="modal__img"
