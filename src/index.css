@@ -598,8 +598,14 @@ body {
     right: 2px;
   }
 
+  /* Match the modal's 18px side gutter across the whole page on mobile.
+     --gutter drives .app's horizontal padding (hero, filters, and grid). */
+  :root {
+    --gutter: 18px;
+  }
+
   .hero {
-    padding: 32px 24px;
+    padding: 32px 18px;
   }
 }
 
