@@ -1,4 +1,4 @@
-import { useEffect, type CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import type { EmbedViewport } from "../App.tsx";
 import { TIFO_LINKS, localizeTifo, type Tifo } from "../data/tifos.ts";
 import { formatDisplayDate, UI_STRINGS, type Language } from "../i18n.ts";
@@ -36,6 +36,18 @@ export function Lightbox({
   onNext,
   onToggleLanguage,
 }: LightboxProps) {
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  // On open and whenever the shown tifo changes (next/prev), reset both scroll
+  // regions to the top so each tifo starts at its title rather than wherever
+  // the previous one was scrolled. The overlay scrolls on desktop; the panel
+  // scrolls on mobile.
+  useEffect(() => {
+    overlayRef.current?.scrollTo({ top: 0 });
+    panelRef.current?.scrollTo({ top: 0 });
+  }, [tifo?.imageSlug]);
+
   useEffect(() => {
     if (!tifo) {
       return;
@@ -80,6 +92,7 @@ export function Lightbox({
 
   return (
     <div
+      ref={overlayRef}
       className={`modal-overlay ${viewport ? "modal-overlay--embedded" : ""}`}
       style={overlayStyle}
       role="dialog"
@@ -123,7 +136,7 @@ export function Lightbox({
             alt={`${title} tifo, raised ${displayDate}`}
           />
         </div>
-        <div className="modal__panel">
+        <div className="modal__panel" ref={panelRef}>
           <button
             className="lang-toggle lang-toggle--modal"
             onClick={onToggleLanguage}

@@ -512,11 +512,15 @@ body {
     align-items: stretch;
   }
 
-  /* Single column: image on top, scrollable text panel below. Keep the modal
-     bounded to the overlay so the panel — not the background — scrolls. */
-  .modal {
+  /* Single column: image on top, scrollable text panel below. Fill the entire
+     overlay slice (no 40px reservation) so there is no dark bar at the bottom;
+     the panel — not the background — scrolls. The embedded selector is repeated
+     to match the base embedded rule's specificity (0-2-0) and win here. */
+  .modal,
+  .modal-overlay--embedded .modal {
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
+    height: 100%;
     max-height: 100%;
     margin: 0;
     border-radius: 0;
@@ -530,6 +534,9 @@ body {
     aspect-ratio: auto;
     /* No dark backdrop needed once the image fills the box edge-to-edge. */
     background: transparent;
+    /* Small breathing room above the photo so it isn't flush against the very
+       top edge / device notch, and clears the close button. */
+    padding-top: 12px;
   }
 
   .modal__img,
