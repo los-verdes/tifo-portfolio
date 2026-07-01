@@ -135,13 +135,13 @@ export const TIFOS: readonly Tifo[] = [
   },
   {
     imageSlug: "playoff-crest",
-    displayDate: "October 23, 2023",
-    isoDate: "2023-10-23",
+    displayDate: "October 23, 2022",
+    isoDate: "2022-10-23",
     opponent: "FC Dallas",
     artist: "Nando Orozco",
     title: "Playoff Crest",
     description:
-      "With less than a week between games, supporters rushed to create a tifo for our second home playoff game against an in-state rival that sucks. Using the crest and streamers as our first “roll-over” tifo helped drive the energy in the stadium, leading the team to their second playoff win and moving us onto the 2023 Western Conference Final.",
+      "With less than a week between games, supporters rushed to create a tifo for our second home playoff game against an in-state rival that sucks. Using the crest and streamers as our first “roll-over” tifo helped drive the energy in the stadium, leading the team to their second playoff win and moving us onto the 2022 Western Conference Final.",
     photoCredit: "Aries Silva",
     sourceUrl:
       `${BASE}tifos/originals/playoff-crest.jpg`,
