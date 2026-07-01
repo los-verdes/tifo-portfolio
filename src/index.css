@@ -589,3 +589,37 @@ body {
     padding: 32px 24px;
   }
 }
+
+/* ---- Tablet / iPad (two-column modal, but roomier than a phone) ---- */
+/* Upper bound covers common iPad landscape widths (iPad 10.2" ≈ 1080px,
+   iPad Pro 11" ≈ 1194px); wider is treated as desktop. */
+@media (min-width: 761px) and (max-width: 1194px) {
+  /* The translucent-white desktop arrows wash out against the opaque dark
+     backdrop on iPad. Make them solid and high-contrast, and pull them in from
+     the screen edges so they sit just outside the modal card. */
+  .modal__close,
+  .modal__nav {
+    background: var(--verde);
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.45);
+  }
+
+  .modal__close:hover,
+  .modal__nav:hover {
+    background: var(--verde-deep);
+  }
+
+  .modal__nav {
+    width: 56px;
+    height: 56px;
+  }
+
+  .modal__nav--prev {
+    left: 24px;
+  }
+
+  .modal__nav--next {
+    right: 24px;
+  }
+}
