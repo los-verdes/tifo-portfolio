@@ -4,3 +4,4 @@ _source
 .DS_Store
 *.local
 .vercel
+scripts/shots

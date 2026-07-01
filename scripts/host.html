@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Embed harness</title>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: system-ui, sans-serif; background: #f2f2f2; }
+      /* Mimic the Squarespace sticky header that overlaps the top of the page. */
+      header#header {
+        position: sticky;
+        top: 0;
+        height: 84px;
+        background: #000;
+        color: #6cff9e;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        font-weight: 800;
+        z-index: 50;
+      }
+      .spacer { height: 40px; }
+      iframe { display: block; width: 100%; border: 0; min-height: 1200px; }
+    </style>
+  </head>
+  <body>
+    <header id="header">LOS VERDES — sticky header</header>
+    <div class="spacer">Some content above the embed…</div>
+
+    <iframe
+      id="tifo-portfolio"
+      src="http://localhost:5173/"
+      title="Tifo Portfolio"
+    ></iframe>
+
+    <div style="height: 400px">Footer content below the embed…</div>
+
+    <!-- Mirror of the production embed snippet in EMBED.md, so the harness
+         reproduces the real header-offset + viewport handshake. Keep in sync. -->
+    <script>
+      (function () {
+        var frame = document.getElementById("tifo-portfolio");
+
+        function stickyHeaderHeight() {
+          var els = document.querySelectorAll("header, .header, #header");
+          var h = 0;
+          for (var i = 0; i < els.length; i++) {
+            var cs = window.getComputedStyle(els[i]);
+            if (cs.position === "fixed" || cs.position === "sticky") {
+              var r = els[i].getBoundingClientRect();
+              if (r.top <= 1 && r.bottom > h) h = r.bottom;
+            }
+          }
+          return h;
+        }
+
+        function sendViewport() {
+          if (!frame) return;
+          var rect = frame.getBoundingClientRect();
+          var viewH = window.innerHeight || document.documentElement.clientHeight;
+          var headerH = stickyHeaderHeight();
+          var top = Math.max(0, headerH - rect.top);
+          var bottom = Math.min(rect.height, viewH - rect.top);
+          var height = Math.max(0, bottom - top);
+          frame.contentWindow.postMessage(
+            { type: "tifo-portfolio:viewport", top: top, height: height },
+            "*"
+          );
+        }
+
+        window.addEventListener("message", function (event) {
+          var data = event.data;
+          if (!data) return;
+          if (data.type === "tifo-portfolio:height" && frame) {
+            frame.style.height = data.height + "px";
+          } else if (data.type === "tifo-portfolio:request-viewport") {
+            sendViewport();
+          }
+        });
+
+        window.addEventListener("scroll", sendViewport, { passive: true });
+        window.addEventListener("resize", sendViewport);
+      })();
+    </script>
+  </body>
+</html>

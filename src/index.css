@@ -503,23 +503,37 @@ body {
 /* ---- Responsive ---- */
 
 @media (max-width: 760px) {
+  /* Full-bleed on mobile: drop the overlay inset so the card — and the image at
+     its top — reaches the screen edges instead of floating with dark margins. */
+  .modal-overlay {
+    padding: 0;
+    align-items: stretch;
+  }
+
   /* Single column: image on top, scrollable text panel below. Keep the modal
      bounded to the overlay so the panel — not the background — scrolls. */
   .modal {
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
-    max-height: calc(100% - 40px);
+    max-height: 100%;
+    margin: 0;
+    border-radius: 0;
   }
 
   .modal__imgwrap {
     /* Shrink-wrap the image: no fixed aspect box, no flex centering, so there
-       are no dark letterbox bands around the photo. */
+       are no dark letterbox bands around the photo. Full-bleed to card edges. */
     display: block;
     min-height: 0;
     aspect-ratio: auto;
+    /* No dark backdrop needed once the image fills the box edge-to-edge. */
+    background: transparent;
   }
 
-  .modal__img {
+  .modal__img,
+  /* Match the base embedded rule's specificity (0-2-0) so this wins in the
+     embedded case too — otherwise its max-height cap letterboxes the image. */
+  .modal-overlay--embedded .modal__img {
     /* Fill the card width at the photo's natural aspect ratio. No max-height /
        object-fit cap — those were letterboxing the image smaller than the box.
        The modal is bounded and the text panel scrolls, so a tall image is fine. */
