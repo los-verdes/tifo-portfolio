@@ -513,16 +513,22 @@ body {
 
   .modal__imgwrap {
     min-height: 0;
+    /* Let the image drive the height so there is no dark letterboxing around a
+       small photo; fills the full card width. */
+    aspect-ratio: auto;
   }
 
   .modal__img {
-    max-height: 45vh;
+    width: 100%;
+    height: auto;
+    max-height: 55vh;
+    object-fit: contain;
   }
 
   /* Embedded: `vh` refers to the tall iframe, not the phone screen, so cap the
      image to a share of the visible slice instead, leaving room for the panel. */
   .modal-overlay--embedded .modal__img {
-    max-height: 45%;
+    max-height: 50%;
   }
 
   /* The panel is the scroll region; contain overscroll so a swipe past the
@@ -533,10 +539,36 @@ body {
     -webkit-overflow-scrolling: touch;
   }
 
+  /* On mobile the white text panel fills the width, so the translucent-white
+     controls vanish against it. Make them solid and dark for contrast, and pin
+     them within the image (dark) region at the top of the card. */
+  .modal__close,
   .modal__nav {
+    position: absolute;
+    background: rgba(5, 23, 12, 0.7);
+    border: 1.5px solid rgba(255, 255, 255, 0.65);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  }
+
+  .modal__close {
+    top: 12px;
+    right: 12px;
+  }
+
+  .modal__nav {
+    /* Sit over the image band (top ~45% of the card), not the white text. */
+    top: 22%;
     width: 42px;
     height: 42px;
     font-size: 1.4rem;
+  }
+
+  .modal__nav--prev {
+    left: 12px;
+  }
+
+  .modal__nav--next {
+    right: 12px;
   }
 
   .hero {

@@ -34,14 +34,31 @@ handles both messages:
   (function () {
     var frame = document.getElementById("tifo-portfolio");
 
+    // Squarespace (and most themes) show a sticky/fixed header that overlaps
+    // the top of the page. We subtract its height from the visible slice so the
+    // popup — and its close button — never land underneath the header.
+    function stickyHeaderHeight() {
+      var els = document.querySelectorAll("header, .header, #header");
+      var h = 0;
+      for (var i = 0; i < els.length; i++) {
+        var cs = window.getComputedStyle(els[i]);
+        if (cs.position === "fixed" || cs.position === "sticky") {
+          var r = els[i].getBoundingClientRect();
+          // Only count a header pinned at/near the top of the viewport.
+          if (r.top <= 1 && r.bottom > h) h = r.bottom;
+        }
+      }
+      return h;
+    }
+
     function sendViewport() {
       if (!frame) return;
       var rect = frame.getBoundingClientRect();
       var viewH = window.innerHeight || document.documentElement.clientHeight;
-      // The slice of the iframe currently visible, in the iframe's own
-      // coordinates: how far its top is above the viewport, and how tall the
-      // visible part is.
-      var top = Math.max(0, -rect.top);
+      var headerH = stickyHeaderHeight();
+      // The slice of the iframe currently visible (and not hidden behind the
+      // sticky header), in the iframe's own coordinates.
+      var top = Math.max(0, headerH - rect.top);
       var bottom = Math.min(rect.height, viewH - rect.top);
       var height = Math.max(0, bottom - top);
       frame.contentWindow.postMessage(
