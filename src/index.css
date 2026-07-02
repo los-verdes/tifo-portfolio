@@ -317,6 +317,13 @@ body {
    visible slice rather than the full frame, so its descendants must position
    against the overlay (absolute) instead of the tall iframe viewport (fixed),
    and heights must be measured against the slice, not 100vh. */
+.modal-overlay--embedded {
+  /* The overlay must NOT scroll: if it did, a touch drag would pan the whole
+     modal (and its absolutely-positioned arrows) instead of scrolling the text
+     panel inside. The modal is bounded to the slice and the panel scrolls. */
+  overflow: hidden;
+}
+
 .modal-overlay--embedded .modal {
   max-height: calc(100% - 40px);
 }
