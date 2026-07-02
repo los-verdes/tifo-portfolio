@@ -39,58 +39,6 @@ export function Lightbox({
   const overlayRef = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
-  const imgwrapRef = useRef<HTMLDivElement>(null);
-
-  // In the side-by-side (desktop/iPad) layout only the text panel scrolls, so a
-  // drag/scroll over the image column does nothing — a confusing "dead zone" on
-  // touch. Forward wheel and touch-drag gestures started on the image over to
-  // the text panel so a drag anywhere in the modal scrolls the text.
-  useEffect(() => {
-    const imgwrap = imgwrapRef.current;
-    const panel = panelRef.current;
-    if (!imgwrap || !panel) {
-      return;
-    }
-
-    const onWheel = (event: WheelEvent): void => {
-      if (panel.scrollHeight <= panel.clientHeight) {
-        return; // nothing to scroll
-      }
-      panel.scrollTop += event.deltaY;
-      event.preventDefault();
-    };
-
-    let lastTouchY: number | null = null;
-    const onTouchStart = (event: TouchEvent): void => {
-      lastTouchY = event.touches[0]?.clientY ?? null;
-    };
-    const onTouchMove = (event: TouchEvent): void => {
-      if (lastTouchY === null || panel.scrollHeight <= panel.clientHeight) {
-        return;
-      }
-      const y = event.touches[0]?.clientY ?? lastTouchY;
-      panel.scrollTop += lastTouchY - y;
-      lastTouchY = y;
-      event.preventDefault();
-    };
-    const onTouchEnd = (): void => {
-      lastTouchY = null;
-    };
-
-    // Passive:false so preventDefault can stop the gesture from panning the
-    // page/overlay instead of scrolling the panel.
-    imgwrap.addEventListener("wheel", onWheel, { passive: false });
-    imgwrap.addEventListener("touchstart", onTouchStart, { passive: false });
-    imgwrap.addEventListener("touchmove", onTouchMove, { passive: false });
-    imgwrap.addEventListener("touchend", onTouchEnd);
-
-    return () => {
-      imgwrap.removeEventListener("wheel", onWheel);
-      imgwrap.removeEventListener("touchstart", onTouchStart);
-      imgwrap.removeEventListener("touchmove", onTouchMove);
-      imgwrap.removeEventListener("touchend", onTouchEnd);
-    };
-  }, [tifo?.imageSlug]);
 
   // On open and whenever the shown tifo changes (next/prev), reset every scroll
   // region to the top so each tifo starts at its image/title rather than where
@@ -140,9 +88,16 @@ export function Lightbox({
 
   // When embedded, pin the overlay to the visible slice of the iframe instead
   // of using the default fixed full-viewport positioning (which, in a tall
-  // auto-resized iframe, would place the modal far off-screen).
+  // auto-resized iframe, would place the modal far off-screen). Also expose the
+  // slice height as `--slice-h` so CSS can cap the image against the real
+  // on-screen space — `vh` refers to the whole tall iframe here and is wrong.
   const overlayStyle: CSSProperties | undefined = viewport
-    ? { position: "absolute", top: viewport.top, height: viewport.height }
+    ? ({
+        position: "absolute",
+        top: viewport.top,
+        height: viewport.height,
+        ["--slice-h"]: `${viewport.height}px`,
+      } as CSSProperties)
     : undefined;
 
   return (
@@ -188,7 +143,7 @@ export function Lightbox({
         ref={modalRef}
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="modal__imgwrap" ref={imgwrapRef}>
+        <div className="modal__imgwrap">
           <img
             className="modal__img"
             src={`${import.meta.env.BASE_URL}tifos/${tifo.imageSlug}.webp`}

@@ -283,6 +283,10 @@ body {
 .modal-overlay {
   position: fixed;
   inset: 0;
+  /* Real height of the visible slice. Standalone it's the viewport; when
+     embedded, JS overrides this with the actual slice height (vh is wrong
+     inside the tall auto-resized iframe). */
+  --slice-h: 100vh;
   /* Fully opaque so the gallery/host page behind the lightbox disappears
      entirely rather than showing through a dim scrim. */
   background: rgb(5, 23, 12);
@@ -622,11 +626,49 @@ body {
    side-by-side layout (image left, text right); only the styling of the
    controls and the touch-scroll of the text panel are tuned here. */
 @media (min-width: 761px) and (max-width: 1194px) {
-  /* Smooth, contained touch scrolling in the text panel (the image is fully
-     contained, so the panel is the only thing that needs to scroll). */
-  .modal__panel {
+  /* Scrolling on iPad: nested inner-panel scrolling (overflow:auto inside an
+     absolutely-positioned modal inside an iframe) is unreliable on iOS Safari —
+     that combination is exactly what failed here. Make the MODAL ITSELF the
+     single scroll container, the same mechanism the phone layout uses (which
+     works on real devices), so a drag anywhere scrolls it. Keep the side-by-side
+     look by making the image a `sticky` left column that stays in view while
+     the text scrolls past it. */
+  .modal,
+  .modal-overlay--embedded .modal {
+    max-height: 100%;
+    overflow-y: auto;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
+    /* Let content define row height so the grid can exceed the modal and scroll
+       instead of being squeezed to fit. */
+    grid-template-rows: auto;
+    align-items: start;
+  }
+
+  .modal__imgwrap {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    /* Cap the image to the real visible height so the sticky column never
+       exceeds the slice; --slice-h is the true on-screen height (see overlay).
+       object-fit: contain keeps the whole tifo visible, no crop. */
+    height: var(--slice-h);
+    max-height: var(--slice-h);
+    min-height: 0;
+  }
+
+  .modal__img,
+  .modal-overlay--embedded .modal__img {
+    /* Fill the sticky wrapper; contain (from base) keeps the whole tifo shown.
+       Override the base 40px cap so it fills the slice-sized wrapper exactly. */
+    height: 100%;
+    max-height: 100%;
+  }
+
+  /* The modal scrolls as a whole now, so the panel must not be its own scroll
+     container (nested scroll is what fails on iOS). */
+  .modal__panel {
+    overflow: visible;
   }
 
   /* Match the phone's controls: dark translucent circles with a light border,
