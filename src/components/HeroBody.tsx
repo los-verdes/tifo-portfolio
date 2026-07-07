@@ -74,8 +74,8 @@ export function HeroBody({ language }: { readonly language: Language }) {
             Steam Team
           </a>{" "}
           y a la{" "}
-          <a href="https://www.instagram.com/danipereira09/" target="_blank" rel="noopener noreferrer">
-            directiva de Austin FC
+          <a href="https://www.youtube.com/watch?v=R-LMgGZUdGQ" target="_blank" rel="noopener noreferrer">
+            personal de Austin FC
           </a>
           , quienes durante años nos han permitido utilizar sus espacios. Sin un
           techo bajo el cual trabajar, nada de esto sería posible.
@@ -177,8 +177,8 @@ export function HeroBody({ language }: { readonly language: Language }) {
           Steam Team
         </a>
         , and the{" "}
-        <a href="https://www.instagram.com/danipereira09/" target="_blank" rel="noopener noreferrer">
-          Austin FC front office
+        <a href="https://www.youtube.com/watch?v=R-LMgGZUdGQ" target="_blank" rel="noopener noreferrer">
+          Austin FC staff
         </a>{" "}
         that have let us use their spaces over the years, as we couldn’t create
         these without a roof over our heads.

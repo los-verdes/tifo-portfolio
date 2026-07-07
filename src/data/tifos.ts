@@ -189,7 +189,7 @@ export const TIFOS: readonly Tifo[] = [
     imageSlug: "juntos-somos-familia",
     displayDate: "October 7, 2023",
     isoDate: "2023-10-07",
-    opponent: "LA FC",
+    opponent: "LAFC",
     artist: "Marcos Morales",
     title: "Juntos Somos Familia",
     description:
@@ -319,6 +319,45 @@ export const TIFOS: readonly Tifo[] = [
     blogUrl:
       "https://www.losverdesatx.org/blog/2026-season-opener-tifo-legacy-of-the-black-cowboy",
   },
+  {
+    imageSlug: "we-are-groot",
+    displayDate: "May 20, 2023",
+    isoDate: "2023-05-20",
+    opponent: "Toronto FC",
+    artist: "Luis “Uloang” Angulo",
+    title: "We Are Groot",
+    description:
+      "Playing off the intertwining Live Oaks in the Austin FC badge and the traditional “We are Austin” phrase used by the club, Collectifo created this amazing image of beloved Marvel superhero Groot, a living tree known for his fierce loyalty and strength (along with his repeated and only dialogue “I am Groot”). Texas bluebonnets, a perennial harbinger of spring in Austin, decorate his hands and body, and the statement “We Are Groot” reminds every opponent that we are stronger together. We are all one Verde family.",
+    photoCredit: "Alex Rubio/Cinco Soles Media",
+    sourceUrl:
+      `${BASE}tifos/originals/we-are-groot.jpg`,
+  },
+  {
+    imageSlug: "verde-listo-a-ganar",
+    displayDate: "October 1, 2025",
+    isoDate: "2025-10-01",
+    opponent: "Nashville SC",
+    artist: "Octavio Sosa",
+    title: "Verde Listo A Ganar",
+    description:
+      "In 2025, Austin FC hosted the final of the Lamar Hunt US Open Cup, the longest-running soccer tournament in the US dating back to 1914. To celebrate the achievement in getting to a tournament final for the very first time and encourage our team to finish the job, Collectifo artists designed this scarf-carrying skeleton, backlit by the moon and surrounded by Mexican free-tailed bats. The skeleton sports a bucket hat, a universal soccer symbol, and is joined by Speedbump, the nine-banded armadillo mascot seen frequently during Austin FC home games.",
+    photoCredit: "Alex Rubio/Cinco Soles Media",
+    sourceUrl:
+      `${BASE}tifos/originals/verde-listo-a-ganar.jpg`,
+  },
+  {
+    imageSlug: "del-austin-para-siempre",
+    displayDate: "November 2, 2025",
+    isoDate: "2025-11-02",
+    opponent: "LAFC",
+    artist: "Homero",
+    title: "Del Austin Para Siempre",
+    description:
+      "After a hard-fought 2025 season, Austin FC finished 6th in the West and achieved the playoffs again after being absent for a few seasons. We ended up playing LAFC, and after a close first game in LA, the teams came to Austin for the second leg. Collectifo reached out to local graffiti artist Homero to design a tifo for the team. Using the banderas from the supporters section as a backdrop, the statement “Del Austin Para Siempre” and a winner’s laurel around the crest showed that our fans and this club will be here forever.",
+    photoCredit: "Alex Rubio/Cinco Soles Media",
+    sourceUrl:
+      `${BASE}tifos/originals/del-austin-para-siempre.jpg`,
+  },
 ] as const;
 
 /** Distinct years present in the data, newest first, for the filter UI. */
@@ -443,6 +482,16 @@ export const TIFO_ES: Readonly<Record<string, TifoTranslation>> = {
     title: "Siempre Cabalgaremos Contigo",
     description:
       "Para el partido inaugural de la temporada 2026, la afición desplegó una imagen de un grupo de vaqueros afroamericanos acompañada de la frase Siempre Cabalgaremos Contigo. El diseño, creado en colaboración por Chris Tobar, Marcos Morales y Rico Hernández, rinde homenaje a la rica historia de los vaqueros afroamericanos en Texas, una herencia preservada y celebrada en el Black Cowboy Museum fundado por Larry Callies. Además de reflejar la pasión de nuestra afición por el equipo, el proyecto también sirvió como una recaudación de fondos para el Black Cowboy Museum, generando más de $2,000 dólares en donaciones y ventas de mercancía para apoyar su expansión y continuar su importante labor. Para más información, consulta nuestra publicación en el blog.",
+  },
+  "we-are-groot": {
+    title: "Somos Groot",
+    description:
+      "Inspirándose en los robles entrelazados del escudo de Austin FC y en la tradicional frase del club, “Somos Austin”, Collectifo creó esta increíble imagen del querido superhéroe de Marvel, Groot, un árbol viviente conocido por su inquebrantable lealtad y fortaleza (además de su única y famosa frase: “Soy Groot”). Sus manos y cuerpo están decorados con bluebonnets de Tejas, las flores silvestres que anuncian cada primavera en Austin, mientras que la frase “Somos Groot” les recuerda a todos nuestros rivales que juntos somos más fuertes. Todos somos una sola familia Verde.",
+  },
+  "verde-listo-a-ganar": {
+    title: "Verde Listo a Ganar",
+    description:
+      "En 2025, Austin FC fue sede de la final de la Lamar Hunt U.S. Open Cup, el torneo de fútbol más antiguo de Estados Unidos, cuya historia se remonta a 1914. Para celebrar que el club alcanzó por primera vez una final de este torneo y motivar al equipo a completar la hazaña, los artistas de Collectifo diseñaron este esqueleto con una bufanda, iluminado por la luna y rodeado de murciélagos de cola libre mexicanos. El esqueleto lleva un sombrero tipo bucket hat, un símbolo muy representativo de la cultura futbolera, y está acompañado por Speedbump, el armadillo de nueve bandas que con frecuencia hace acto de presencia durante los partidos de Austin FC como local.",
   },
 };
 
@@ -574,5 +623,11 @@ export const TIFO_LINKS: Readonly<Record<string, readonly InlineLink[]>> = {
   "we-will-ride-with-you-forever": [
     { text: "Chris Tobar", url: "https://www.instagram.com/tobartakeover/" },
     { text: "Marcos Morales", url: "https://www.instagram.com/_keezii" },
+  ],
+  "we-are-groot": [
+    { text: "Luis “Uloang” Angulo", url: "https://www.instagram.com/uloang/" },
+  ],
+  "verde-listo-a-ganar": [
+    { text: "Octavio Sosa", url: "https://www.instagram.com/octavio_art_/" },
   ],
 };
