@@ -493,6 +493,11 @@ export const TIFO_ES: Readonly<Record<string, TifoTranslation>> = {
     description:
       "En 2025, Austin FC fue sede de la final de la Lamar Hunt U.S. Open Cup, el torneo de fútbol más antiguo de Estados Unidos, cuya historia se remonta a 1914. Para celebrar que el club alcanzó por primera vez una final de este torneo y motivar al equipo a completar la hazaña, los artistas de Collectifo diseñaron este esqueleto con una bufanda, iluminado por la luna y rodeado de murciélagos de cola libre mexicanos. El esqueleto lleva un sombrero tipo bucket hat, un símbolo muy representativo de la cultura futbolera, y está acompañado por Speedbump, el armadillo de nueve bandas que con frecuencia hace acto de presencia durante los partidos de Austin FC como local.",
   },
+  "del-austin-para-siempre": {
+    title: "Del Austin Para Siempre",
+    description:
+      "Tras una temporada 2025 muy disputada, Austin FC terminó en el sexto lugar de la Conferencia Oeste y consiguió regresar a los playoffs después de varias temporadas de ausencia. El equipo enfrentó a LAFC, y después del primer partido competitivo en Los Ángeles, regresaron a Austin para el segundo encuentro. Collectifo encargó al artista de grafiti local Homero la creación del tifo. Utilizando las banderas de la sección de animación como fondo, la frase “Del Austin Para Siempre” y una corona de laureles alrededor del escudo transmitían un mensaje claro: nuestra afición y este club estarán aquí para siempre.",
+  },
 };
 
 /**
