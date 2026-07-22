@@ -635,4 +635,7 @@ export const TIFO_LINKS: Readonly<Record<string, readonly InlineLink[]>> = {
   "verde-listo-a-ganar": [
     { text: "Octavio Sosa", url: "https://www.instagram.com/octavio_art_/" },
   ],
+  "del-austin-para-siempre": [
+    { text: "Homero", url: "https://instagram.com/dfkte" },
+  ],
 };
